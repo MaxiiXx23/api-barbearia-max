@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+    database:
+        image: postgres
+        container_name: barbearia_max
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_USER=barbearia_DB
+            - POSTGRES_PASSWORD=max123456
+            - POSTGRES_DB=barbearia
+        volumes:
+            - pgdata:/data/postgres
+
+    app:
+        build: .
+        container_name: barbearia_server
+        ports:
+            - 3000:3000
+        volumes:
+            - .:/usr/app
+        links:
+            - database
+        depends_on:
+            - database
+
+volumes:
+    pgdata:
+        driver: local
