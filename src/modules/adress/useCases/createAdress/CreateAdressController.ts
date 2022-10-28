@@ -1,0 +1,41 @@
+import { Request, Response } from "express";
+import { container } from "tsyringe";
+
+import { CreateAdressUseCase } from "./CreateAdressUseCase";
+
+class CreateAdressController {
+    async handle(request: Request, response: Response): Promise<Response> {
+        const {
+            cep,
+            public_place,
+            number,
+            complement,
+            city,
+            state,
+            country,
+            reference,
+        } = request.body;
+
+        const createAdressUseCase = container.resolve(CreateAdressUseCase);
+
+        try {
+            await createAdressUseCase.execute({
+                cep,
+                public_place,
+                number,
+                complement,
+                city,
+                state,
+                country,
+                reference,
+            });
+
+            return response.status(201).json({ msg: "Adress created." });
+        } catch (error) {
+            const { message } = error as Error;
+            return response.status(400).json({ error: message });
+        }
+    }
+}
+
+export { CreateAdressController };
