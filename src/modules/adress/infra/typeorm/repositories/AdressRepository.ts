@@ -41,6 +41,32 @@ class AdressRepository implements IAdressRepository {
         return adress;
     }
 
+    async update({
+        id,
+        cep,
+        public_place,
+        number,
+        complement,
+        city,
+        state,
+        country,
+        reference,
+    }: ICreateAdressDTO): Promise<Adress> {
+        const adress = this.repository.create({
+            id,
+            cep,
+            public_place,
+            number,
+            complement,
+            city,
+            state,
+            country,
+            reference,
+        });
+        await this.repository.save(adress);
+        return adress;
+    }
+
     async delete(id: string): Promise<void> {
         await this.repository.delete(id);
     }

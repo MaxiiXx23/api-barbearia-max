@@ -11,16 +11,13 @@ const validatorAdress = [
     check("number").trim().isInt().withMessage("Number is invalid."),
     check("complement")
         .trim()
-        .not()
-        .isEmpty()
+        .isLength({ max: 10 })
         .withMessage("Complement is invalid."),
     check("city").trim().not().isEmpty().withMessage("City is invalid."),
-    check("state").trim().isLength({ max: 2 }).withMessage("State is invalid."),
+    check("state").trim().isLength({ min: 2 }).withMessage("State is invalid."),
     check("country").trim().not().isEmpty().withMessage("Country is invalid."),
     check("reference")
-        .trim()
-        .not()
-        .isEmpty()
+        .isLength({ max: 50 })
         .withMessage("Reference is invalid."),
     (request: Request, response: Response, next: NextFunction) => {
         const errors = validationResult(request);

@@ -13,7 +13,7 @@ class ProfileUserUseCase {
     async execute(id: string): Promise<User> {
         const user = await this.usersRepository.findById(id);
         if (!user) {
-            throw new Error("E-mail does not exists.");
+            throw new Error("User does not exists.");
         }
 
         return user;
