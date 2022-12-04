@@ -1,10 +1,11 @@
-import { injectable, inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
+import { Adress } from "../../infra/typeorm/entities/Adress";
 import { IAdressRepository } from "../../repositories/IAdressRepository";
 
 @injectable()
-class DeleteAdressUseCase {
+class GetAddressesUseCase {
     constructor(
         @inject("AdressRepository")
         private adressRepository: IAdressRepository,
@@ -13,20 +14,16 @@ class DeleteAdressUseCase {
         private usersRepository: IUsersRepository
     ) {}
 
-    async execute(id: string, id_user: string): Promise<void> {
-        const user = await this.usersRepository.findById(id_user);
+    async execute(id: string): Promise<Adress[]> {
+        const user = await this.usersRepository.findById(id);
 
         if (!user) {
             throw new Error("User does not exists.");
         }
 
-        const adress = await this.adressRepository.findById(id);
-        if (!adress) {
-            throw new Error("Adress does not exists.");
-        }
-
-        await this.adressRepository.delete(adress.id);
+        const addresses = await this.adressRepository.getAddresses(id);
+        return addresses;
     }
 }
 
-export { DeleteAdressUseCase };
+export { GetAddressesUseCase };

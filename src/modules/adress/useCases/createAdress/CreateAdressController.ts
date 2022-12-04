@@ -5,6 +5,7 @@ import { CreateAdressUseCase } from "./CreateAdressUseCase";
 
 class CreateAdressController {
     async handle(request: Request, response: Response): Promise<Response> {
+        const { id: user_id } = request.user;
         const {
             cep,
             public_place,
@@ -28,6 +29,7 @@ class CreateAdressController {
                 state,
                 country,
                 reference,
+                user_id,
             });
 
             return response.status(201).json({ msg: "Adress created." });

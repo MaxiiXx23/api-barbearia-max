@@ -21,6 +21,7 @@ class AdressRepository implements IAdressRepository {
         state,
         country,
         reference,
+        user_id,
     }: ICreateAdressDTO): Promise<void> {
         const adress = this.repository.create({
             cep,
@@ -31,14 +32,19 @@ class AdressRepository implements IAdressRepository {
             state,
             country,
             reference,
+            user_id,
         });
 
         await this.repository.save(adress);
     }
 
-    async findById(id: string): Promise<Adress> {
-        const adress = await this.repository.findOneBy({ id });
-        return adress;
+    async getAddresses(id: string): Promise<Adress[]> {
+        const address = await this.repository.find({
+            where: {
+                user_id: id,
+            },
+        });
+        return address;
     }
 
     async update({
@@ -51,6 +57,7 @@ class AdressRepository implements IAdressRepository {
         state,
         country,
         reference,
+        user_id,
     }: ICreateAdressDTO): Promise<Adress> {
         const adress = this.repository.create({
             id,
@@ -62,8 +69,14 @@ class AdressRepository implements IAdressRepository {
             state,
             country,
             reference,
+            user_id,
         });
         await this.repository.save(adress);
+        return adress;
+    }
+
+    async findById(id: string): Promise<Adress> {
+        const adress = await this.repository.findOneBy({ id });
         return adress;
     }
 

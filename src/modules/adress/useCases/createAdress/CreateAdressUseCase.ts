@@ -19,6 +19,7 @@ class CreateAdressUseCase {
         state,
         country,
         reference,
+        user_id,
     }: ICreateAdressDTO): Promise<void> {
         try {
             await this.adressRepository.create({
@@ -30,6 +31,7 @@ class CreateAdressUseCase {
                 state,
                 country,
                 reference,
+                user_id,
             });
         } catch (error) {
             const { message } = error as Error;

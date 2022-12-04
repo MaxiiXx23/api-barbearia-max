@@ -45,6 +45,7 @@ class UpdateAdressUseCase {
         adress.state = state;
         adress.country = country;
         adress.reference = reference;
+        adress.user_id = user_id;
 
         try {
             const adressUpdated = await this.adressRepository.update(adress);

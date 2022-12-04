@@ -8,6 +8,7 @@ interface ICreateAdressDTO {
     country: string;
     complement: string;
     reference: string;
+    user_id: string;
 }
 
 export { ICreateAdressDTO };
