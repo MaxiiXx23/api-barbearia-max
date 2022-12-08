@@ -14,7 +14,7 @@ import { Adress } from "../../../../adress/infra/typeorm/entities/Adress";
 @Entity("salon")
 class Salon {
     @PrimaryColumn()
-    id: string;
+    id?: string;
 
     @Column()
     name: string;
@@ -23,7 +23,7 @@ class Salon {
     slogan: string;
 
     @Column()
-    photo: string;
+    photo?: string;
 
     @OneToOne(() => Adress)
     @JoinColumn({ name: "adress_id" })
@@ -41,6 +41,7 @@ class Salon {
     constructor() {
         if (!this.id) {
             this.id = uuidV4();
+            this.photo = "avatarPhoto.jpg";
         }
     }
 }

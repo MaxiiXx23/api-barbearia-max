@@ -34,7 +34,7 @@ class UpdateAdressUseCase {
         const adress = await this.adressRepository.findById(id);
 
         if (!adress) {
-            throw new Error("User does not exists.");
+            throw new Error("Address does not exists.");
         }
 
         adress.cep = cep;
