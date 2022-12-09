@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import {
     Entity,
     PrimaryColumn,
@@ -37,6 +38,11 @@ class Salon {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    @Expose({ name: "photo_url" })
+    photo_url(): string {
+        return `${process.env.LOCAL_URL}/profile/${this.photo}`;
+    }
 
     constructor() {
         if (!this.id) {
