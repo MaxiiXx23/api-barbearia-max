@@ -1,16 +1,12 @@
-import { stat, unlink } from "fs";
+import fs from "fs";
 
 async function deleteFile(filename: string) {
     try {
-        await stat(filename, (error) => {
-            throw new Error(error.message);
-        });
+        await fs.promises.stat(filename);
     } catch {
         return;
     }
-    await unlink(filename, (error) => {
-        throw new Error(error.message);
-    });
+    await fs.promises.unlink(filename);
 }
 
 export { deleteFile };

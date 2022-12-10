@@ -26,12 +26,14 @@ class SalonRepository implements ISalonRepository {
     async update({
         id,
         name,
+        photo,
         slogan,
         adress_id,
     }: ICreateSalonDTO): Promise<Salon> {
         const salon = this.repository.create({
             id,
             name,
+            photo,
             slogan,
             adress_id,
         });
