@@ -17,6 +17,16 @@ class ServicesRepository implements IServicesRepository {
         return service;
     }
 
+    async update(data: ICreateServiceDTO): Promise<Service> {
+        const service = this.repository.create(data);
+        await this.repository.update(data.id, service);
+        return service;
+    }
+
+    async delete(id: string): Promise<void> {
+        await this.repository.delete(id);
+    }
+
     async findById(id: string): Promise<Service> {
         const service = this.repository.findOneBy({ id });
         return service;

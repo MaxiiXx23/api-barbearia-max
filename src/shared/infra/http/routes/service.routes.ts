@@ -1,18 +1,28 @@
 import { Router } from "express";
 
 import { CreateServiceController } from "../../../../modules/service/useCases/CreateService/CreateServiceController";
+import { DeleteServiceController } from "../../../../modules/service/useCases/DeleteService/DeleteServiceController";
+import { GetServiceController } from "../../../../modules/service/useCases/GetServices/GetServiceController";
+import { UpdateServiceController } from "../../../../modules/service/useCases/UpdateService/UpdateServiceController";
 import { validatorService } from "../middlewares/validators/validatorService";
-import { verifyToken } from "../middlewares/verifyToken";
 
 const serviceRoutes = Router();
 
+const getServiceController = new GetServiceController();
 const createServiceController = new CreateServiceController();
+const updateServiceController = new UpdateServiceController();
+const deleteServiceController = new DeleteServiceController();
 
-serviceRoutes.post(
-    "/",
-    verifyToken,
+serviceRoutes.get("/", getServiceController.handle);
+
+serviceRoutes.post("/", validatorService, createServiceController.handle);
+
+serviceRoutes.put(
+    "/update/:id",
     validatorService,
-    createServiceController.handle
+    updateServiceController.handle
 );
+
+serviceRoutes.delete("/delete/:id", deleteServiceController.handle);
 
 export { serviceRoutes };

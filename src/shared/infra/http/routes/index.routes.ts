@@ -17,6 +17,6 @@ routes.get("/", (request, response) => {
 routes.use("/users", usersRoutes);
 routes.use("/adress", verifyToken, adressRoutes);
 routes.use("/salon", salonRoutes);
-routes.use("/service", serviceRoutes);
+routes.use("/service", verifyToken, serviceRoutes);
 
 export { routes };
