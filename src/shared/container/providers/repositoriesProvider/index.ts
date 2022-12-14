@@ -6,6 +6,8 @@ import { AdressRepository } from "../../../../modules/adress/infra/typeorm/repos
 import { IAdressRepository } from "../../../../modules/adress/repositories/IAdressRepository";
 import { SalonRepository } from "../../../../modules/salon/infra/typeorm/repositories/SalonRepository";
 import { ISalonRepository } from "../../../../modules/salon/repositories/ISalonRepository";
+import { ServicesRepository } from "../../../../modules/service/infra/typeorm/repositories/ServicesRepository";
+import { IServicesRepository } from "../../../../modules/service/repositories/IServicesRepository";
 
 container.registerSingleton<IUsersRepository>(
     "UsersRepository",
@@ -20,4 +22,9 @@ container.registerSingleton<IAdressRepository>(
 container.registerSingleton<ISalonRepository>(
     "SalonRepository",
     SalonRepository
+);
+
+container.registerSingleton<IServicesRepository>(
+    "ServicesRepository",
+    ServicesRepository
 );
