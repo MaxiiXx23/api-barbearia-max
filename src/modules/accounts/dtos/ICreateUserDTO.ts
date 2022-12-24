@@ -4,6 +4,7 @@ interface ICreateUserDTO {
     password: string;
     name: string;
     photo?: string;
+    phone: string;
     isAdmin?: boolean;
 }
 

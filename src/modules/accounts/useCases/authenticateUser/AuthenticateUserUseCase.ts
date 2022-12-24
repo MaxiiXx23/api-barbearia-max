@@ -10,7 +10,8 @@ interface ITokenResponse {
     user: {
         name: string;
         email: string;
-        // photo: string;
+        photo: string;
+        phone: string;
     };
     token: string;
 }
@@ -43,6 +44,8 @@ class AuthenticateUserUseCase {
             user: {
                 email: user.email,
                 name: user.name,
+                photo: user.photo_url(),
+                phone: user.phone,
             },
             token,
         };

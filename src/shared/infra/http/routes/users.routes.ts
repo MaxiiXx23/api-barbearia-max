@@ -15,7 +15,7 @@ const authenticateUserController = new AuthenticateUserController();
 
 usersRoutes.post("/", validatorUser, createUserController.handle);
 usersRoutes.get("/profile", verifyToken, profileUserController.handle);
-usersRoutes.get(
+usersRoutes.post(
     "/authenticate",
     validatorAuthenticate,
     authenticateUserController.handle

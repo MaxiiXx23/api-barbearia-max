@@ -11,11 +11,17 @@ class UsersRepository implements IUsersRepository {
         this.repository = dataSource.getRepository(User);
     }
 
-    async create({ email, password, name }: ICreateUserDTO): Promise<void> {
+    async create({
+        email,
+        password,
+        name,
+        phone,
+    }: ICreateUserDTO): Promise<void> {
         const user = this.repository.create({
             email,
             password,
             name,
+            phone,
         });
         await this.repository.save(user);
     }

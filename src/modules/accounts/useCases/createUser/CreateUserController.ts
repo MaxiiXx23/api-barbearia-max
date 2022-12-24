@@ -5,7 +5,8 @@ import { CreateUserUseCase } from "./CreateUserUseCase";
 
 class CreateUserController {
     async handle(request: Request, response: Response): Promise<Response> {
-        const { email, password, name } = request.body;
+        // deve ser possível cadastrar tbm idade, telefone
+        const { email, password, name, phone } = request.body;
         const createUserUseCase = container.resolve(CreateUserUseCase);
 
         try {
@@ -13,6 +14,7 @@ class CreateUserController {
                 email,
                 password,
                 name,
+                phone,
             });
             return response.status(201).json({ message: "User created." });
         } catch (error) {

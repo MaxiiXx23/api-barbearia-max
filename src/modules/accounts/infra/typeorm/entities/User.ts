@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
@@ -19,6 +20,9 @@ class User {
     photo: string;
 
     @Column()
+    phone: string;
+
+    @Column()
     isAdmin: boolean;
 
     @CreateDateColumn()
@@ -27,9 +31,15 @@ class User {
     @CreateDateColumn()
     updated_at: Date;
 
+    @Expose({ name: "photo_url" })
+    photo_url(): string {
+        return `/profile/${this.photo}`;
+    }
+
     constructor() {
         if (!this.id) {
             this.id = uuidV4();
+            this.photo = "avatarUserIcon.png";
         }
     }
 }
