@@ -5,12 +5,13 @@ import { GetAddressesUseCase } from "./GetAddressesUseCase";
 
 class GetAddressesController {
     async handle(request: Request, response: Response): Promise<Response> {
-        const { id } = request.user;
+        const { id: id_user } = request.user;
+        const { id } = request.params;
 
         const getAddressesUseCase = container.resolve(GetAddressesUseCase);
 
         try {
-            const address = await getAddressesUseCase.execute(id);
+            const address = await getAddressesUseCase.execute({ id_user, id });
             return response.json({ address });
         } catch (error) {
             const { message } = error as Error;

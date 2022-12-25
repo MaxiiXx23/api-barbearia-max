@@ -4,6 +4,10 @@ import { IUsersRepository } from "../../../accounts/repositories/IUsersRepositor
 import { Adress } from "../../infra/typeorm/entities/Adress";
 import { IAdressRepository } from "../../repositories/IAdressRepository";
 
+interface IRequest {
+    id_user: string;
+    id: string;
+}
 @injectable()
 class GetAddressesUseCase {
     constructor(
@@ -14,8 +18,8 @@ class GetAddressesUseCase {
         private usersRepository: IUsersRepository
     ) {}
 
-    async execute(id: string): Promise<Adress[]> {
-        const user = await this.usersRepository.findById(id);
+    async execute({ id_user, id }: IRequest): Promise<Adress[]> {
+        const user = await this.usersRepository.findById(id_user);
 
         if (!user) {
             throw new Error("User does not exists.");

@@ -8,14 +8,8 @@ import { usersRoutes } from "./users.routes";
 
 const routes = Router();
 
-routes.get("/", (request, response) => {
-    return response.status(201).json({
-        message: "hello",
-    });
-});
-
 routes.use("/users", usersRoutes);
-routes.use("/adress", verifyToken, adressRoutes);
+routes.use("/address", verifyToken, adressRoutes);
 routes.use("/salon", salonRoutes);
 routes.use("/service", verifyToken, serviceRoutes);
 
