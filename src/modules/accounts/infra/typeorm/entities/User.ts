@@ -1,5 +1,11 @@
 import { Expose } from "class-transformer";
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    PrimaryColumn,
+    UpdateDateColumn,
+} from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
 @Entity("users")
@@ -28,7 +34,7 @@ class User {
     @CreateDateColumn()
     created_at: Date;
 
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updated_at: Date;
 
     @Expose({ name: "photo_url" })
