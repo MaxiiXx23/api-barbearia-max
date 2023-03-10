@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 
-const validatorAdress = [
+const validatorAddress = [
     check("cep").trim().isPostalCode("BR").withMessage("CEP is invalid."),
     check("public_place")
         .trim()
@@ -28,4 +28,4 @@ const validatorAdress = [
     },
 ];
 
-export { validatorAdress };
+export { validatorAddress };

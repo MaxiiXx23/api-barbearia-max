@@ -4,18 +4,22 @@ import { CreateAdressController } from "../../../../modules/adress/useCases/crea
 import { DeleteAdressController } from "../../../../modules/adress/useCases/deleteAdress/DeleteAdressController";
 import { GetAddressesController } from "../../../../modules/adress/useCases/getAdresses/GetAddressesController";
 import { UpdateAdressController } from "../../../../modules/adress/useCases/updateAdress/UpdateAdressController";
-import { validatorAdress } from "../middlewares/validators/validatorAdress";
+import { validatorAddress } from "../middlewares/validators/validatorAddress";
 
-const adressRoutes = Router();
+const addressRoutes = Router();
 
 const createAdressController = new CreateAdressController();
 const updateAdressController = new UpdateAdressController();
 const getAddressesController = new GetAddressesController();
 const deleteAdressController = new DeleteAdressController();
 
-adressRoutes.post("/", validatorAdress, createAdressController.handle);
-adressRoutes.put("/update/:id", validatorAdress, updateAdressController.handle);
-adressRoutes.get("/getAddresses/:id", getAddressesController.handle);
-adressRoutes.delete("/delete/:id", deleteAdressController.handle);
+addressRoutes.post("/", validatorAddress, createAdressController.handle);
+addressRoutes.put(
+    "/update/:id",
+    validatorAddress,
+    updateAdressController.handle
+);
+addressRoutes.get("/getAddresses/:id", getAddressesController.handle);
+addressRoutes.delete("/delete/:id", deleteAdressController.handle);
 
-export { adressRoutes };
+export { addressRoutes };

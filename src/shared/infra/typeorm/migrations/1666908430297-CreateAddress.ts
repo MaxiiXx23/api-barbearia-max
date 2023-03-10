@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateSalon1666906678321 implements MigrationInterface {
+export class CreateAddress1666908430297 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "salon",
+                name: "address",
                 columns: [
                     {
                         name: "id",
@@ -12,19 +12,39 @@ export class CreateSalon1666906678321 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: "name",
+                        name: "cep",
                         type: "varchar",
                     },
                     {
-                        name: "slogan",
+                        name: "public_place",
                         type: "varchar",
                     },
                     {
-                        name: "photo",
+                        name: "number",
+                        type: "int",
+                    },
+                    {
+                        name: "city",
                         type: "varchar",
                     },
                     {
-                        name: "adress_id",
+                        name: "state",
+                        type: "varchar",
+                    },
+                    {
+                        name: "country",
+                        type: "varchar",
+                    },
+                    {
+                        name: "complement",
+                        type: "varchar",
+                    },
+                    {
+                        name: "reference",
+                        type: "varchar",
+                    },
+                    {
+                        name: "user_id",
                         type: "uuid",
                     },
                     {
@@ -40,10 +60,10 @@ export class CreateSalon1666906678321 implements MigrationInterface {
                 ],
                 foreignKeys: [
                     {
-                        name: "fk_adress",
-                        referencedTableName: "adress",
+                        name: "FKUserId",
+                        referencedTableName: "users",
                         referencedColumnNames: ["id"],
-                        columnNames: ["adress_id"],
+                        columnNames: ["user_id"],
                     },
                 ],
             })
@@ -51,7 +71,7 @@ export class CreateSalon1666906678321 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("salon", "fk_adress");
-        await queryRunner.dropTable("salon");
+        await queryRunner.dropForeignKey("address", "user_id");
+        await queryRunner.dropTable("address");
     }
 }

@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateEndereco1666908430297 implements MigrationInterface {
+export class CreateSalon1678463830250 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "adress",
+                name: "salon",
                 columns: [
                     {
                         name: "id",
@@ -12,36 +12,20 @@ export class CreateEndereco1666908430297 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: "cep",
+                        name: "name",
                         type: "varchar",
                     },
                     {
-                        name: "public_place",
+                        name: "slogan",
                         type: "varchar",
                     },
                     {
-                        name: "number",
-                        type: "int",
-                    },
-                    {
-                        name: "city",
+                        name: "photo",
                         type: "varchar",
                     },
                     {
-                        name: "state",
-                        type: "varchar",
-                    },
-                    {
-                        name: "country",
-                        type: "varchar",
-                    },
-                    {
-                        name: "complement",
-                        type: "varchar",
-                    },
-                    {
-                        name: "reference",
-                        type: "varchar",
+                        name: "address_id",
+                        type: "uuid",
                     },
                     {
                         name: "created_at",
@@ -54,11 +38,20 @@ export class CreateEndereco1666908430297 implements MigrationInterface {
                         default: "now()",
                     },
                 ],
+                foreignKeys: [
+                    {
+                        name: "fk_address",
+                        referencedTableName: "address",
+                        referencedColumnNames: ["id"],
+                        columnNames: ["address_id"],
+                    },
+                ],
             })
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("adress");
+        await queryRunner.dropForeignKey("salon", "fk_address");
+        await queryRunner.dropTable("salon");
     }
 }

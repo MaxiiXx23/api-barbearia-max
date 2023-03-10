@@ -11,7 +11,7 @@ import { v4 as uuidV4 } from "uuid";
 
 import { User } from "../../../../accounts/infra/typeorm/entities/User";
 
-@Entity("adress")
+@Entity("address")
 class Adress {
     @PrimaryColumn()
     id?: string;
