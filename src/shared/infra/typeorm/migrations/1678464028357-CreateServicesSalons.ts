@@ -5,7 +5,7 @@ import {
     TableForeignKey,
 } from "typeorm";
 
-export class CreateServicesSalon1670880489230 implements MigrationInterface {
+export class CreateServicesSalons1678464028357 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
