@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { DeleteServiceUseCase } from "./DeleteServiceUseCase";
 
 class DeleteServiceController {
@@ -14,8 +15,8 @@ class DeleteServiceController {
             await deleteServiceUseCase.execute({ id_user, id });
             return response.json({ message: "Service deleted." });
         } catch (error) {
-            const { message } = error as Error;
-            return response.status(500).json({ error: message });
+            const { message, statusCode } = error as ApiError;
+            return response.status(statusCode).json({ error: message });
         }
     }
 }

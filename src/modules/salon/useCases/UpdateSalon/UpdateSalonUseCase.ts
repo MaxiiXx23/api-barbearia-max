@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { ICreateSalonDTO } from "../../dtos/ICreateSalonDTO";
 import { ISalonRepository } from "../../repositories/ISalonRepository";
@@ -18,13 +19,13 @@ class UpdateSalonUseCase {
         const user = await this.usersRepository.findById(id_user);
 
         if (!user.isAdmin) {
-            throw new Error("User haven't permition.");
+            throw new ApiError("User haven't permition.", 401);
         }
 
         const salon = await this.salonRepository.findToUpdateById(id);
 
         if (!salon) {
-            throw new Error("Salon does not exists.");
+            throw new ApiError("Salon does not exists.", 400);
         }
 
         salon.name = name;

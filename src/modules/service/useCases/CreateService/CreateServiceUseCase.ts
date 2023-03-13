@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { IRequestServiceDTO } from "../../dtos/IRequestServiceDTO";
 import { Service } from "../../infra/typeorm/entities/Service";
@@ -23,7 +24,7 @@ class CreateServiceUseCase {
         const user = await this.usersRepository.findById(id_user);
 
         if (!user.isAdmin) {
-            throw new Error("User haven't permition.");
+            throw new ApiError("User haven't permition.", 401);
         }
 
         const serviceAlreadyExists = await this.servicesRepository.findByName(
@@ -31,7 +32,7 @@ class CreateServiceUseCase {
         );
 
         if (serviceAlreadyExists) {
-            throw new Error("Service Already Exists.");
+            throw new ApiError("Service Already Exists.", 400);
         }
 
         const newService = await this.servicesRepository.create({

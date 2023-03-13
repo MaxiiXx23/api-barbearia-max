@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IStorageProvider } from "../../../../shared/container/providers/storageProvider/IStorageProvider";
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
@@ -21,7 +22,7 @@ class UploadPhotoUserUseCase {
     async execute({ id, file }: IRequest): Promise<string> {
         const user = await this.usersRepository.findById(id);
         if (!user) {
-            throw new Error("User not found.");
+            throw new ApiError("User not found.", 400);
         }
 
         if (user.photo !== "avatarUserIcon.png") {

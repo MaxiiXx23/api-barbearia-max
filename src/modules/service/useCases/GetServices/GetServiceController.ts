@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { GetServiceUseCase } from "./GetServiceUseCase";
 
 class GetServiceController {
@@ -14,9 +15,9 @@ class GetServiceController {
             const service = await getServiceUseCase.execute({ id_user, name });
             return response.json({ service });
         } catch (error) {
-            const { message } = error as Error;
+            const { message, statusCode } = error as ApiError;
 
-            return response.status(500).json({ error: message });
+            return response.status(statusCode).json({ error: message });
         }
     }
 }

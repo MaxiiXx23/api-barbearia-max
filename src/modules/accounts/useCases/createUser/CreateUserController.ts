@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
 class CreateUserController {
@@ -18,8 +19,8 @@ class CreateUserController {
             });
             return response.status(201).json({ message: "User created." });
         } catch (error) {
-            const { message } = error as Error;
-            return response.status(400).json({ error: message });
+            const { message, statusCode } = error as ApiError;
+            return response.status(statusCode).json({ error: message });
         }
     }
 }

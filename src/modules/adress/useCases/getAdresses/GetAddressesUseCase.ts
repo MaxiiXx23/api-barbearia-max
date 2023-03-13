@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { Adress } from "../../infra/typeorm/entities/Adress";
 import { IAdressRepository } from "../../repositories/IAdressRepository";
@@ -22,7 +23,7 @@ class GetAddressesUseCase {
         const user = await this.usersRepository.findById(id_user);
 
         if (!user) {
-            throw new Error("User does not exists.");
+            throw new ApiError("User does not exists.", 400);
         }
 
         const addresses = await this.adressRepository.getAddresses(id);

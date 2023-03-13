@@ -3,6 +3,7 @@ import { sign } from "jsonwebtoken";
 import { injectable, inject } from "tsyringe";
 
 import { auth } from "../../../../config/auth";
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IRequestDTO } from "../../dtos/IRequestDTO";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -32,7 +33,7 @@ class AuthenticateUserUseCase {
         const passwordCompared = await compare(password, user.password);
 
         if (!passwordCompared) {
-            throw new Error("E-mail or Password is invalid");
+            throw new ApiError("E-mail or Password is invalid", 401);
         }
 
         const token = sign({}, auth.secret_key_JWT, {

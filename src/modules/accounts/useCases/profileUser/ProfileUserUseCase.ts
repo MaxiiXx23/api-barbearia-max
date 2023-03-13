@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { User } from "../../infra/typeorm/entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -13,7 +14,7 @@ class ProfileUserUseCase {
     async execute(id: string): Promise<User> {
         const user = await this.usersRepository.findById(id);
         if (!user) {
-            throw new Error("User does not exists.");
+            throw new ApiError("User does not exists.", 400);
         }
 
         return user;

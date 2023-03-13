@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { UpdateAdressUseCase } from "./UpdateAdressUseCase";
 
 class UpdateAdressController {
@@ -35,9 +36,9 @@ class UpdateAdressController {
             });
             return response.json({ adressUpdated });
         } catch (error) {
-            const { message } = error as Error;
+            const { message, statusCode } = error as ApiError;
 
-            return response.status(500).json({ error: message });
+            return response.status(statusCode).json({ error: message });
         }
     }
 }

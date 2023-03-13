@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { IRequestServiceDTO } from "../../dtos/IRequestServiceDTO";
 import { Service } from "../../infra/typeorm/entities/Service";
@@ -23,13 +24,13 @@ class UpdateServiceUseCase {
     }: IRequestServiceDTO): Promise<Service> {
         const user = await this.usersRepository.findById(id_user);
         if (!user.isAdmin) {
-            throw new Error("User haven't permition.");
+            throw new ApiError("User haven't permition.", 401);
         }
 
         const service = await this.servicesRepository.findById(id);
 
         if (!service) {
-            throw new Error("Service not found.");
+            throw new ApiError("Service not found.", 400);
         }
 
         service.name = name;

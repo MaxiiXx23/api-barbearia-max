@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { GetAddressesUseCase } from "./GetAddressesUseCase";
 
 class GetAddressesController {
@@ -14,9 +15,9 @@ class GetAddressesController {
             const address = await getAddressesUseCase.execute({ id_user, id });
             return response.json({ address });
         } catch (error) {
-            const { message } = error as Error;
+            const { message, statusCode } = error as ApiError;
 
-            return response.status(500).json({ message });
+            return response.status(statusCode).json({ message });
         }
     }
 }

@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { IRequestAdressDTO } from "../../dtos/IRequestAdressDTO";
 import { IAdressRepository } from "../../repositories/IAdressRepository";
@@ -28,13 +29,13 @@ class UpdateAdressUseCase {
         const user = await this.usersRepository.findById(user_id);
 
         if (!user) {
-            throw new Error("User does not exists.");
+            throw new ApiError("User does not exists.", 400);
         }
 
         const adress = await this.adressRepository.findById(id);
 
         if (!adress) {
-            throw new Error("Address does not exists.");
+            throw new ApiError("Address does not exists.", 400);
         }
 
         adress.cep = cep;
@@ -47,13 +48,8 @@ class UpdateAdressUseCase {
         adress.reference = reference;
         adress.user_id = user_id;
 
-        try {
-            const adressUpdated = await this.adressRepository.update(adress);
-            return adressUpdated;
-        } catch (error) {
-            const { message } = error as Error;
-            return message;
-        }
+        const adressUpdated = await this.adressRepository.update(adress);
+        return adressUpdated;
     }
 }
 

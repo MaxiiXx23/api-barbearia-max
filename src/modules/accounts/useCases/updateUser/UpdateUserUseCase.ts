@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { User } from "../../infra/typeorm/entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -20,7 +21,7 @@ class UpdateUserUseCase {
         const user = await this.usersRepository.findById(id);
 
         if (!user) {
-            throw new Error("User not found.");
+            throw new ApiError("User not found.", 400);
         }
 
         user.name = name;

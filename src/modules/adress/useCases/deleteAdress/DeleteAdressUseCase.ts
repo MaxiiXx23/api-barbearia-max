@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { IAdressRepository } from "../../repositories/IAdressRepository";
 
@@ -17,12 +18,12 @@ class DeleteAdressUseCase {
         const user = await this.usersRepository.findById(id_user);
 
         if (!user) {
-            throw new Error("User does not exists.");
+            throw new ApiError("User does not exists.", 400);
         }
 
         const adress = await this.adressRepository.findById(id);
         if (!adress) {
-            throw new Error("Adress does not exists.");
+            throw new ApiError("Adress does not exists.", 400);
         }
 
         await this.adressRepository.delete(adress.id);

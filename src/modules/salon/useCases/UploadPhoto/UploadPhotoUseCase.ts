@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IStorageProvider } from "../../../../shared/container/providers/storageProvider/IStorageProvider";
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { ISalonRepository } from "../../repositories/ISalonRepository";
 
@@ -27,13 +28,13 @@ class UploadPhotoUseCase {
         const user = await this.usersRepository.findById(id_user);
 
         if (!user.isAdmin) {
-            throw new Error("User haven't permition.");
+            throw new ApiError("User haven't permition.", 401);
         }
 
         const salon = await this.salonRepository.findToUpdateById(id);
 
         if (!salon) {
-            throw new Error("Salon not found.");
+            throw new ApiError("Salon not found.", 400);
         }
 
         if (salon.photo !== "avatarPhoto.jpg") {
