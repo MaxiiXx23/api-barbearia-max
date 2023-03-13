@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { CreateSalonUseCase } from "./CreateSalonUseCase";
 
 class CreateSalonController {
@@ -21,8 +22,8 @@ class CreateSalonController {
 
             return response.json({ salon });
         } catch (error) {
-            const { message } = error as Error;
-            return response.status(500).json({ message });
+            const { message, statusCode } = error as ApiError;
+            return response.status(statusCode).json({ message });
         }
     }
 }

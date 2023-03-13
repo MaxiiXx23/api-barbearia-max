@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { IServicesRepository } from "../../repositories/IServicesRepository";
 
@@ -21,13 +22,13 @@ class DeleteServiceUseCase {
     async execute({ id_user, id }: IRequest): Promise<void> {
         const user = await this.usersRepository.findById(id_user);
         if (!user.isAdmin) {
-            throw new Error("user haven't permition.");
+            throw new ApiError("user haven't permition.", 401);
         }
 
         const service = await this.servicesRepository.findById(id);
 
         if (!service) {
-            throw new Error("Service not found.");
+            throw new ApiError("Service not found.", 400);
         }
 
         await this.servicesRepository.delete(id);

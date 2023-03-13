@@ -9,7 +9,7 @@ import { usersRoutes } from "./users.routes";
 const routes = Router();
 
 routes.use("/users", usersRoutes);
-routes.use("/address", verifyToken);
+routes.use("/address", verifyToken, addressRoutes);
 routes.use("/salon", salonRoutes);
 routes.use("/service", verifyToken, serviceRoutes);
 

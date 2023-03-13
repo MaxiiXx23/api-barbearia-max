@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { Service } from "../../infra/typeorm/entities/Service";
 import { IServicesRepository } from "../../repositories/IServicesRepository";
@@ -23,7 +24,7 @@ class GetServiceUseCase {
         const user = await this.usersRepository.findById(id_user);
 
         if (!user) {
-            throw new Error("User does not exists.");
+            throw new ApiError("User does not exists.", 400);
         }
 
         const service = await this.servicesRepository.findByName(name);

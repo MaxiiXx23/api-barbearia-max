@@ -1,5 +1,7 @@
 import { injectable, inject } from "tsyringe";
 
+import { ApiError } from "../../../../shared/error/ApiError";
+import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { ICreateAdressDTO } from "../../dtos/ICreateAdressDTO";
 import { IAdressRepository } from "../../repositories/IAdressRepository";
 
@@ -7,7 +9,10 @@ import { IAdressRepository } from "../../repositories/IAdressRepository";
 class CreateAdressUseCase {
     constructor(
         @inject("AdressRepository")
-        private adressRepository: IAdressRepository
+        private adressRepository: IAdressRepository,
+
+        @inject("UsersRepository")
+        private usersRepository: IUsersRepository
     ) {}
 
     async execute({
@@ -20,7 +25,12 @@ class CreateAdressUseCase {
         country,
         reference,
         user_id,
-    }: ICreateAdressDTO): Promise<void> {
+    }: ICreateAdressDTO): Promise<string | void> {
+        const user = await this.usersRepository.findById(user_id);
+        if (user) {
+            throw new ApiError("User already exists.", 400);
+        }
+
         try {
             await this.adressRepository.create({
                 cep,
@@ -33,9 +43,10 @@ class CreateAdressUseCase {
                 reference,
                 user_id,
             });
+            return "Address created";
         } catch (error) {
             const { message } = error as Error;
-            console.log(message);
+            return message;
         }
     }
 }
